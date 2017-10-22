@@ -24,7 +24,7 @@
 //    Button btnSubmit;
 //
 //    //Instances of usable class
-//    //Game game = new Game();
+//    //StockExchangeSimulator game = new StockExchangeSimulator();
 //
 //    @Override //what will be loaded
 //    public void initialize(URL location, ResourceBundle resources) {
@@ -32,13 +32,13 @@
 //        txtArea.setWrapText(true);
 //        registerSubmitEnterButtonAction();
 //        registerSubmitButtonAction();
-//        Game.test();
+//        StockExchangeSimulator.test();
 //
 //    }
 //
 //    public void submitAction(String input){
-//        Game.comend = "asdfasdfasf";
-//        showToConsole(Game.comend);
+//        StockExchangeSimulator.comend = "asdfasdfasf";
+//        showToConsole(StockExchangeSimulator.comend);
 //        txtInput.clear();
 //    }
 //
