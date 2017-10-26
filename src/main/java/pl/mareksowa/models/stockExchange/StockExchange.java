@@ -6,11 +6,9 @@ import java.util.*;
 
 public class StockExchange {
     private List<StockModel> marketStock;
-    private StockModel stock;
 
-    public StockExchange(List<StockModel> marketStock, StockModel stock) {
-        this.marketStock = marketStock;
-        this.stock = stock;
+    public StockExchange() {
+        marketStock = new ArrayList<>();
     }
 
     public List<StockModel> getMarketStock() {
@@ -19,13 +17,5 @@ public class StockExchange {
 
     public void setMarketStock(List<StockModel> marketStock) {
         this.marketStock = marketStock;
-    }
-
-    public StockModel getStock() {
-        return stock;
-    }
-
-    public void setStock(StockModel stock) {
-        this.stock = stock;
     }
 }

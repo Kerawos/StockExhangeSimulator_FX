@@ -11,7 +11,7 @@ import java.util.List;
 
 public class StockExchangeDaoImpl implements StockExchangeDao {
 
-    List<StockExchange> makrets;
+    private List<StockExchange> makrets;
     private StockManager stockManager;
 
     public StockExchangeDaoImpl() {
@@ -26,23 +26,23 @@ public class StockExchangeDaoImpl implements StockExchangeDao {
     }
 
     @Override
-    public List<StockModel> createStockList() {
-        List<StockModel> marketStock = new ArrayList<>();
+    public List<StockModel> createStockList(int marketNumber) {
+        makrets.get(marketNumber).getMarketStock();
         for (int i = 0; i < 5; i++) { // create 5 default stock
-            marketStock.add(new StockModel(stockManager.generateName(), stockManager.generatePrice(), stockManager.generateType())); // add random Stock
+            makrets.get(marketNumber).getMarketStock().add(new StockModel(stockManager.generateName(), stockManager.generatePrice(), stockManager.generateType())); // add random Stock
             int repeats = 0;
-            for (StockModel stock1 : marketStock) { // loop thru our list
-                if (stock1.getName().equals(marketStock.get(i).getName())) { // check repeats
+            for (StockModel stock1 : makrets.get(marketNumber).getMarketStock()) { // loop thru our list
+                if (stock1.getName().equals(makrets.get(marketNumber).getMarketStock().get(i).getName())) { // check repeats
                     repeats++;
                     if (repeats > 1) {// prevent comparing same stocks
-                        marketStock.remove(i); //if same, then delete
+                        makrets.get(marketNumber).getMarketStock().remove(i); //if same, then delete
                         i--; // decrement i
                     }
                     break; // exit 1'st loop
                 }
             }
         }
-        return marketStock;
+        return makrets.get(marketNumber).getMarketStock();
     }
 
 

@@ -2,16 +2,18 @@ package pl.mareksowa.models.stockExchange;
 
 import pl.mareksowa.models.stock.StockModel;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Player {
 
     private double cash;
-    private List<StockModel> wallet;
+    private HashMap<StockModel, Integer> wallet;
 
-    public Player(double cash, List<StockModel> wallet) {
+    public Player(double cash) {
         this.cash = cash;
-        this.wallet = wallet;
+        wallet = new HashMap<>();
     }
 
     public double getCach() {
@@ -22,11 +24,11 @@ public class Player {
         this.cash = cach;
     }
 
-    public List<StockModel> getWallet() {
+    public HashMap<StockModel, Integer> getWallet() {
         return wallet;
     }
 
-    public void setWallet(List<StockModel> wallet) {
+    public void setWallet(HashMap<StockModel, Integer> wallet) {
         this.wallet = wallet;
     }
 }

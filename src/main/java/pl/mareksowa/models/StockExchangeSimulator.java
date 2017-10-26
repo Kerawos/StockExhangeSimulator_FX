@@ -14,6 +14,7 @@ import pl.mareksowa.models.stockExchange.dao.PlayerDao;
 import pl.mareksowa.models.stockExchange.dao.StockExchangeDao;
 import pl.mareksowa.models.stockExchange.dao.impl.PlayerDaoImpl;
 import pl.mareksowa.models.stockExchange.dao.impl.StockExchangeDaoImpl;
+import pl.mareksowa.views.ShowOutput;
 
 import java.net.URL;
 import java.util.*;
@@ -28,6 +29,7 @@ public class StockExchangeSimulator{
     private Map<StockModel, Integer> myStock;
     private List<StockModel> marketStock;
     private StockModel stock;
+    private ShowOutput showOutput;
 
     StockExchangeDao stockExchangeDao;
     StockExchange stockExchange;
@@ -42,15 +44,17 @@ public class StockExchangeSimulator{
         stockExchange = stockExchangeDao.getAllStockExchanges().get(0);
         playerDao = new PlayerDaoImpl();
         player = playerDao.getAllPlayers().get(0);
+        showOutput = new ShowOutput();
 
         // create market stock list
-        stockExchangeDao.initializeStocksMarket();
-
+        stockExchangeDao.createStockList(0);
 
         //StockExchangeSimulator (from 1'st turn to 281'st turn
         for (turns = 1; turns < 281 ; turns++) {
-            stockExchangeSimulator.print30EmptyLines(); // print empty 30 lines
-            showToConsole(stockExchangeSimulator.timeOfPlay(turns) + "     *****     Currently you have $" + (double)(Math.round(cash)*100)/100 + " , Your STOCK: ");
+            showOutput.print10EmptyLines(); // print empty 10 lines
+            showOutput.showToConsole(stockExchangeDao.getTimeOfPlay(turns) + "     *****     Currently you " +
+                    "have $" + (double)(Math.round(player.getCach())*100)/100 + " , Your STOCK: ");
+            showOutput.showToConsole(playerDao.getMyStocks(player.getWallet()));
             stockExchangeSimulator.showMyStocks(myStock);
             showToConsole("\nStock value:");
 

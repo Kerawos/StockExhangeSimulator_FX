@@ -14,9 +14,9 @@ public class ShowOutput {
         controller.showToConsole(output);
     }
 
-    public void print30EmptyLines(){
-        for (int i = 0; i < 30 ; i++) {
-            showToConsole("");
+    public void print10EmptyLines(){
+        for (int i = 0; i < 10 ; i++) {
+            controller.showToConsole("");
         }
     }
 }

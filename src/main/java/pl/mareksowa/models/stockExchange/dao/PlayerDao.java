@@ -9,8 +9,8 @@ import java.util.Map;
 public interface PlayerDao {
     List<Player>getAllPlayers();
     boolean isAlreadyInWallet(StockModel stock);
-    void buyStock();
-    void sellStock();
-    void sellAllStocks();
-    String getMyStocks(Map<StockModel, Integer> myList);
+    void buyStock(int playerNumber);
+    void sellStock(int playerNumber);
+    void sellAllStocks(int playerNumber);
+    String getMyStocks(int playerNumber);
 }

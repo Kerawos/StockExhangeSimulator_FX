@@ -18,7 +18,7 @@ public class PlayerDaoImpl implements PlayerDao {
 
     public PlayerDaoImpl() {
         players = new ArrayList<>();
-        players.add(new Player(120, new ArrayList<>()));
+        players.add(new Player(120));
         showOutput = new ShowOutput();
         mainController = new MainController();
     }
@@ -105,15 +105,15 @@ public class PlayerDaoImpl implements PlayerDao {
     }
 
     @Override
-    public void sellAllStocks() {
+    public void sellAllStocks(int playerNumber) {
         int valueTimes = 0;
-        for (Map.Entry<StockModel, Integer> iterat : myStock.entrySet()){ //loop thru our stock
-            valueTimes = iterat.getValue();
+        for (Map.Entry<StockModel, Integer> element : players.get(playerNumber).getWallet().entrySet()){ //loop thru our stock
+            valueTimes = element.getValue();
             for (StockModel stock1 : marketStock) {//loop for market for check if stock exists
-                if (stock1.getName().equals(iterat.getKey().getName())){ // check sell price
-                    cash += (stock1.getPriceSell()*valueTimes); // sell xTimes our stock
-                    iterat.setValue(0);
-                    myStock.remove(iterat.getKey(), iterat.getValue());
+                if (stock1.getName().equals(element.getKey().getName())){ // check sell price
+                    players.get(playerNumber).setCach(players.get(playerNumber).getCach()+stock1.getPriceSell()*valueTimes);// sell xTimes our stock
+                    element.setValue(0);
+                    myStock.remove(element.getKey(), element.getValue());
                     break;
                 }
             }
@@ -121,11 +121,11 @@ public class PlayerDaoImpl implements PlayerDao {
     }
 
     @Override
-    public String getMyStocks(Map<StockModel, Integer> myList) {
+    public String getMyStocks(int playerNumber) {
         StringBuilder builder = new StringBuilder();
         int i = 0;
-        for (Map.Entry<StockModel, Integer> iterat : myList.entrySet()) { //iterrate thru our Map
-            builder.append(i + ". " + iterat.getKey() + ", ilosc x" + iterat.getValue()); // show our wallet
+        for (Map.Entry<StockModel, Integer> element : players.get(playerNumber).getWallet().entrySet()) { //iterrate thru our Map
+            builder.append(i + ". " + element.getKey() + ", ilosc x" + element.getValue()); // show our wallet
             i++;
         }
         return builder.toString();
