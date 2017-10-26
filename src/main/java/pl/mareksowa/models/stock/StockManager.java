@@ -19,6 +19,7 @@ public class StockManager {
     }
 
     public double updatePriceBuy(double price){
+
         return Math.round((price*1.025) * 100) / 100;
     }
 

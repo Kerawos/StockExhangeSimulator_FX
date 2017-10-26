@@ -8,82 +8,43 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import pl.mareksowa.models.stock.StockModel;
+import pl.mareksowa.models.stockExchange.Player;
+import pl.mareksowa.models.stockExchange.StockExchange;
+import pl.mareksowa.models.stockExchange.dao.PlayerDao;
 import pl.mareksowa.models.stockExchange.dao.StockExchangeDao;
+import pl.mareksowa.models.stockExchange.dao.impl.PlayerDaoImpl;
 import pl.mareksowa.models.stockExchange.dao.impl.StockExchangeDaoImpl;
 
 import java.net.URL;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class StockExchangeSimulator implements Initializable{
-
-    //FX declaration
-    @FXML
-    TextField txtInput;
-
-    @FXML
-    TextArea txtArea;
-
-    @FXML
-    Button btnSubmit;
-
-    StockExchangeDao stockExchangeDao;
+public class StockExchangeSimulator{
 
     //variables declaration
-    public String comend;
-    public int turns;
-    public int comendOption;
-    public double cash;
-    public boolean isAlreadyInWallet;
-    public Map<StockModel, Integer> myStock;
-    public List<StockModel> marketStock;
-    public StockModel stock;
-    public Scanner sc;
+    private String comend;
+    private int turns;
+    private int comendOption;
+    private Map<StockModel, Integer> myStock;
+    private List<StockModel> marketStock;
+    private StockModel stock;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        Platform.runLater(()->txtInput.requestFocus());
-        txtArea.setWrapText(true);
-        registerSubmitEnterButtonAction();
-        registerSubmitButtonAction();
-        StockExchangeSimulator stockExchangeSimulator = new StockExchangeSimulator();
-        stockExchangeSimulator.test();
-    }
+    StockExchangeDao stockExchangeDao;
+    StockExchange stockExchange;
+    PlayerDao playerDao;
+    Player player;
 
 
-    public void submitAction(String input){
-        showToConsole(input);
-        txtInput.clear();
-    }
+    public void startStockExhangeSimulator(){
 
-
-    public void registerSubmitButtonAction(){
-        btnSubmit.setOnMouseClicked(e->submitAction(txtInput.getText()));
-    }
-
-
-    private void registerSubmitEnterButtonAction(){
-        txtInput.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER){
-                submitAction(txtInput.getText());
-            }
-        });
-    }
-
-
-    public void start(){
-
+        //init
         stockExchangeDao = new StockExchangeDaoImpl();
-        //initialization
-        cash = 500.0;
-        isAlreadyInWallet = false;
-        StockExchangeSimulator stockExchangeSimulator = new StockExchangeSimulator();
-        myStock = new HashMap<>();
-        marketStock = new ArrayList<>();
-        stock = new StockModel();
-        sc = new Scanner(System.in);
+        stockExchange = stockExchangeDao.getAllStockExchanges().get(0);
+        playerDao = new PlayerDaoImpl();
+        player = playerDao.getAllPlayers().get(0);
 
-        stockExchangeSimulator.initializeStocksMarket(marketStock); // create market stock list
+        // create market stock list
+        stockExchangeDao.initializeStocksMarket();
 
 
         //StockExchangeSimulator (from 1'st turn to 281'st turn

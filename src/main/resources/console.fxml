@@ -5,17 +5,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="800.0" style="-fx-background-color: #504A49;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.mareksowa.models.StockExchangeSimulator">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="800.0" style="-fx-background-color: #504A49;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.mareksowa.controllers.MainController">
    <children>
-      <TextArea fx:id="txtArea" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="572.0" prefWidth="772.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00;">
+      <TextArea fx:id="txtOutput" editable="false" layoutX="14.0" layoutY="14.0" prefHeight="572.0" prefWidth="772.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00;">
          <font>
             <Font size="14.0" />
          </font>
       </TextArea>
-      <TextField fx:id="txtInput" layoutX="14.0" layoutY="601.0" prefHeight="25.0" prefWidth="691.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00;">
+      <TextField fx:id="txtInput" layoutX="14.0" layoutY="601.0" prefHeight="25.0" prefWidth="772.0" style="-fx-control-inner-background:#000000; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00;">
          <font>
             <Font size="14.0" />
          </font></TextField>
-      <Button fx:id="btnSubmit" layoutX="719.0" layoutY="601.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="67.0" style="-fx-control-inner-background: #000000; -fx-font-family: Consolas; -fx-highlight-fill: #00ff00; -fx-highlight-text-fill: #000000; -fx-text-fill: #00ff00; -fx-background-color: #000000;" text="Submit" />
    </children>
 </AnchorPane>

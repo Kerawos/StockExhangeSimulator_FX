@@ -6,20 +6,20 @@ import java.util.List;
 
 public class Player {
 
-    private double cach;
+    private double cash;
     private List<StockModel> wallet;
 
-    public Player(double cach, List<StockModel> wallet) {
-        this.cach = cach;
+    public Player(double cash, List<StockModel> wallet) {
+        this.cash = cash;
         this.wallet = wallet;
     }
 
     public double getCach() {
-        return cach;
+        return cash;
     }
 
     public void setCach(double cach) {
-        this.cach = cach;
+        this.cash = cach;
     }
 
     public List<StockModel> getWallet() {

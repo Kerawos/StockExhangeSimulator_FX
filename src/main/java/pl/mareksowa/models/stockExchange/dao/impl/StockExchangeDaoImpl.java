@@ -1,22 +1,23 @@
 package pl.mareksowa.models.stockExchange.dao.impl;
 
 import javafx.application.Platform;
+import pl.mareksowa.models.stock.StockManager;
 import pl.mareksowa.models.stock.StockModel;
 import pl.mareksowa.models.stockExchange.StockExchange;
 import pl.mareksowa.models.stockExchange.dao.StockExchangeDao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
 
 public class StockExchangeDaoImpl implements StockExchangeDao {
 
     List<StockExchange> makrets;
+    private StockManager stockManager;
 
     public StockExchangeDaoImpl() {
         makrets = new ArrayList<>();
         makrets.add(new StockExchange());
+        stockManager = new StockManager();
     }
 
     @Override
@@ -25,9 +26,10 @@ public class StockExchangeDaoImpl implements StockExchangeDao {
     }
 
     @Override
-    public void initializeStocksMarket(List<StockModel> marketStock) {
+    public List<StockModel> createStockList() {
+        List<StockModel> marketStock = new ArrayList<>();
         for (int i = 0; i < 5; i++) { // create 5 default stock
-            marketStock.add(new StockModel()); // add random Stock
+            marketStock.add(new StockModel(stockManager.generateName(), stockManager.generatePrice(), stockManager.generateType())); // add random Stock
             int repeats = 0;
             for (StockModel stock1 : marketStock) { // loop thru our list
                 if (stock1.getName().equals(marketStock.get(i).getName())) { // check repeats
@@ -40,8 +42,8 @@ public class StockExchangeDaoImpl implements StockExchangeDao {
                 }
             }
         }
+        return marketStock;
     }
-
 
 
     @Override
@@ -71,14 +73,19 @@ public class StockExchangeDaoImpl implements StockExchangeDao {
 
 
     @Override
-    public String getStockList(List<StockModel> myList) {
+    public String getStockFromStockList(List<StockModel> stockList) {
         StringBuilder builder = new StringBuilder();
         int i = 0;
-        for (StockModel stock : myList) {
+        for (StockModel stock : stockList) {
             builder.append(i + ". " + stock);
             i++;
         }
         return builder.toString();
+    }
+
+    @Override
+    public void updatePricesOfStockList(List<StockModel> stockList) {
+
     }
 
     @Override

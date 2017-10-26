@@ -10,11 +10,11 @@ public class StockModel {
     private double priceSell;
     private int type;
 
-    public StockModel(String name, double price, double priceBuy, double priceSell, int type) {
+    public StockModel(String name, double price, int type) {
         this.name = name;
         this.price = price;
-        this.priceBuy = priceBuy;
-        this.priceSell = priceSell;
+        this.priceBuy = Math.round((price*1.025) * 100) / 100;
+        this.priceSell = Math.round((price*0.975)*100) / 100;
         this.type = type;
     }
 

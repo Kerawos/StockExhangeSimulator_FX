@@ -1,18 +1,39 @@
 package pl.mareksowa.models.stockExchange.dao.impl;
 
+import pl.mareksowa.controllers.MainController;
 import pl.mareksowa.models.stock.StockModel;
+import pl.mareksowa.models.stockExchange.Player;
 import pl.mareksowa.models.stockExchange.dao.PlayerDao;
+import pl.mareksowa.views.ShowOutput;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class PlayerDaoImpl implements PlayerDao {
 
+    List<Player> players;
+    ShowOutput showOutput;
+    MainController mainController;
+
+    public PlayerDaoImpl() {
+        players = new ArrayList<>();
+        players.add(new Player(120, new ArrayList<>()));
+        showOutput = new ShowOutput();
+        mainController = new MainController();
+    }
+
+    @Override
+    public List<Player> getAllPlayers() {
+        return players;
+    }
+//
     @Override
     public void buyStock() {
         int stockIndicator;
 
         do {
-            showToConsole("Type number of the Stock which you wanna buy:");
+            showOutput.showToConsole("Type number of the Stock which you wanna buy:");
             comend = sc.nextLine();
             stockIndicator = Integer.parseInt(comend);
             if (stockIndicator>=marketStock.size()-1){

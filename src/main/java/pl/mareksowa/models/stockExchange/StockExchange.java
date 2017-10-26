@@ -1,18 +1,31 @@
 package pl.mareksowa.models.stockExchange;
 
-import pl.mareksowa.models.StockExchangeSimulator;
 import pl.mareksowa.models.stock.StockModel;
 
 import java.util.*;
 
 public class StockExchange {
+    private List<StockModel> marketStock;
+    private StockModel stock;
 
-    private double cash = 500.0;
-    private boolean isAlreadyInWallet = false;
-    private Map<StockModel, Integer> myStock = new HashMap<>();
-    private List<StockModel> marketStock = new ArrayList<>();
-    private StockModel stock = new StockModel();
-    StockExchangeSimulator stockExchangeSimulator = new StockExchangeSimulator();
+    public StockExchange(List<StockModel> marketStock, StockModel stock) {
+        this.marketStock = marketStock;
+        this.stock = stock;
+    }
 
+    public List<StockModel> getMarketStock() {
+        return marketStock;
+    }
 
+    public void setMarketStock(List<StockModel> marketStock) {
+        this.marketStock = marketStock;
+    }
+
+    public StockModel getStock() {
+        return stock;
+    }
+
+    public void setStock(StockModel stock) {
+        this.stock = stock;
+    }
 }
