@@ -7,11 +7,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import pl.mareksowa.models.StockExchangeSimulator;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
+
+    StockExchangeSimulator simulator;
 
     //FX declaration
     @FXML
@@ -26,6 +29,8 @@ public class MainController implements Initializable {
         txtOutput.setWrapText(true);
         txtInput.requestFocus();
         registerHitEnterKey();
+        simulator = new StockExchangeSimulator();
+        simulator.startStockExhangeSimulator();
     }
 
     public void registerHitEnterKey(){

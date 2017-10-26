@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import pl.mareksowa.controllers.MainController;
 import pl.mareksowa.models.stock.StockModel;
 import pl.mareksowa.models.stockExchange.Player;
 import pl.mareksowa.models.stockExchange.StockExchange;
@@ -27,15 +28,14 @@ public class StockExchangeSimulator{
     private int turns;
     private int comendOption;
     private Map<StockModel, Integer> myStock;
-    private List<StockModel> marketStock;
     private StockModel stock;
     private ShowOutput showOutput;
 
-    StockExchangeDao stockExchangeDao;
-    StockExchange stockExchange;
-    PlayerDao playerDao;
-    Player player;
-
+    private StockExchangeDao stockExchangeDao;
+    private StockExchange stockExchange;
+    private PlayerDao playerDao;
+    private Player player;
+    private MainController mainController;
 
     public void startStockExhangeSimulator(){
 
@@ -50,40 +50,31 @@ public class StockExchangeSimulator{
         stockExchangeDao.createStockList(0);
 
         //StockExchangeSimulator (from 1'st turn to 281'st turn
+        welcomeScreen();
         for (turns = 1; turns < 281 ; turns++) {
             showOutput.print10EmptyLines(); // print empty 10 lines
             showOutput.showToConsole(stockExchangeDao.getTimeOfPlay(turns) + "     *****     Currently you " +
                     "have $" + (double)(Math.round(player.getCach())*100)/100 + " , Your STOCK: ");
-            showOutput.showToConsole(playerDao.getMyStocks(player.getWallet()));
-            stockExchangeSimulator.showMyStocks(myStock);
-            showToConsole("\nStock value:");
+            showOutput.showToConsole(playerDao.getMyStocks(0));
 
-            for (StockModel stock1 : marketStock) {
-                stock1.adjustPrice(); //adjust new prise
-                if(stock1.getPrice()<10.0){ //check if company bankpurts
-                    showToConsole("Company " + stock.getName() + " bankpurts...");
-                    marketStock.remove(stock1);
-                    marketStock.add(new StockModel());
-                }
-            }
-            stockExchangeSimulator.showStockList(marketStock); //show to user current stock values
+            showOutput.showToConsole("\nStock value:");
+            //show to user current stock values
+            showOutput.showToConsole(stockExchangeDao.getStockFromStockList(stockExchange.getMarketStock()));
+            showOutput.showToConsole("\nTo buy stock type 'b', to sell 's', to sell All stocks 'sAll', to wait " +
+                    "turn 'next', to StockExchangeSimulator Exit 'exit'. All you should confirm by presing 'Submit' button.");
 
-            showToConsole("\nTo buy stock type 'b', to sell 's', to sell All stocks 'sAll', to wait turn 'next', to StockExchangeSimulator Exit 'exit'. All you should confirm by presing 'Submit' button.");
-            comend = txtInput.getText();
-
-            //TODO trzeba jakos zastopowac zeby user wpisal text
-
+            comend = mainController.getUserInput();
             switch (comend){
                 case "b": {
-                    stockExchangeSimulator.buyStock();
+                    playerDao.buyStock(0);
                     break;
                 }
                 case "s":{
-                    stockExchangeSimulator.sellStock();
+                    playerDao.sellStock(0);
                     break;
                 }
                 case "sAll":{
-                    stockExchangeSimulator.sellAllStocks();
+                    playerDao.sellAllStocks(0);
                     break;
                 }
                 case "next":{
@@ -94,35 +85,36 @@ public class StockExchangeSimulator{
                     break;
                 }
                 default:{
-                    showToConsole("So loud here, Maklers doesn't understand yours intentions, try be more accurate.");
+                    showOutput.showToConsole("So loud here, Maklers doesn't understand yours intentions, try be more accurate.");
                     continue;
                 }
             }
         }
 
-        stockExchangeSimulator.sellAllStocks();
+        playerDao.sellAllStocks(0);
         if (turns<300){
-            showToConsole("Month gone..\n \n   *****   You earn: $" + (double)(Math.round(cash - 500)*100)/100);
+            showOutput.showToConsole("Month gone..\n \n   *****   You earn: $" + (double)(Math.round(player.getCach())*100)/100);
         } else {
-            showToConsole("You abort the stockExchangeSimulator..\n\n    *****    You earn: $" + (double)(Math.round(cash-500)*100)/100);
+            showOutput.showToConsole("You abort the stockExchangeSimulator..\n\n    *****    You earn: $" + (double)(Math.round(player.getCach())*100)/100);
         }
 
     }
 
-    public void welcomeScreen(){
-        showToConsole("Stock Exhanege Simulator 2017 by Marek Sowa");
+    private void welcomeScreen(){
+        showOutput.showToConsole("Stock Exhanege Simulator 2017 by Marek Sowa");
         try {
             TimeUnit.SECONDS.sleep(2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        showToConsole("\nHey There!\nYou came to the stock exhange with yours savings $500\nStock Exhange open 8-18\nTry to multiply your money after near month\nGood Luck!");
+        showOutput.showToConsole("\nHey There!\nYou came to the stock exhange with yours savings $500\nStock Exhange open 8-18\nTry to multiply your money after near month\nGood Luck!");
         try {
             TimeUnit.SECONDS.sleep(5);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
+
 
 
 
