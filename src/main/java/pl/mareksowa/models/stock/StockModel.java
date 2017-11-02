@@ -60,11 +60,7 @@ public class StockModel {
 
     @Override
     public String toString() {
-        return "Stock{" +
-                "Name = '" + name + '\'' +
-                ", Buy price $" + priceBuy +
-                ", Sell price $" + priceSell +
-                '}';
+        return name + ", Buy price $" + priceBuy + ", Sell price $" + priceSell;
     }
 
 }

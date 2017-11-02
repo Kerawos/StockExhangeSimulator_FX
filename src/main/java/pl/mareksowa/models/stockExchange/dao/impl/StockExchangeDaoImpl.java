@@ -77,7 +77,7 @@ public class StockExchangeDaoImpl implements StockExchangeDao {
         StringBuilder builder = new StringBuilder();
         int i = 0;
         for (StockModel stock : stockList) {
-            builder.append(i + ". " + stock);
+            builder.append(i + ". " + stock + "\n");
             i++;
         }
         return builder.toString();
