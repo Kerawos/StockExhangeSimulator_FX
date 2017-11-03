@@ -11,38 +11,38 @@ import java.util.List;
 
 public class StockExchangeDaoImpl implements StockExchangeDao {
 
-    private List<StockExchange> makrets;
+    private List<StockExchange> markets;
     private StockManager stockManager;
 
     public StockExchangeDaoImpl() {
-        makrets = new ArrayList<>();
-        makrets.add(new StockExchange());
+        markets = new ArrayList<>();
+        markets.add(new StockExchange());
         stockManager = new StockManager();
     }
 
     @Override
     public List<StockExchange> getAllStockExchanges() {
-        return makrets;
+        return markets;
     }
 
     @Override
     public List<StockModel> createStockList(int marketNumber) {
-        makrets.get(marketNumber).getMarketStock();
+        markets.get(marketNumber).getMarketStock();
         for (int i = 0; i < 5; i++) { // create 5 default stock
-            makrets.get(marketNumber).getMarketStock().add(new StockModel(stockManager.generateName(), stockManager.generatePrice(), stockManager.generateType())); // add random Stock
+            markets.get(marketNumber).getMarketStock().add(new StockModel(stockManager.generateName(), stockManager.generatePrice(), stockManager.generateType())); // add random Stock
             int repeats = 0;
-            for (StockModel stock1 : makrets.get(marketNumber).getMarketStock()) { // loop thru our list
-                if (stock1.getName().equals(makrets.get(marketNumber).getMarketStock().get(i).getName())) { // check repeats
+            for (StockModel stock1 : markets.get(marketNumber).getMarketStock()) { // loop thru our list
+                if (stock1.getName().equals(markets.get(marketNumber).getMarketStock().get(i).getName())) { // check repeats
                     repeats++;
                     if (repeats > 1) {// prevent comparing same stocks
-                        makrets.get(marketNumber).getMarketStock().remove(i); //if same, then delete
+                        markets.get(marketNumber).getMarketStock().remove(i); //if same, then delete
                         i--; // decrement i
                     }
                     break; // exit 1'st loop
                 }
             }
         }
-        return makrets.get(marketNumber).getMarketStock();
+        return markets.get(marketNumber).getMarketStock();
     }
 
 
@@ -88,7 +88,6 @@ public class StockExchangeDaoImpl implements StockExchangeDao {
 
     }
 
-    @Override
     public void closeApp() {
         Platform.exit();
         System.exit(0);

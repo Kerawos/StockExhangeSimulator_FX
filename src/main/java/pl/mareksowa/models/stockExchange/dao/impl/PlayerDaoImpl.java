@@ -34,41 +34,42 @@ public class PlayerDaoImpl implements PlayerDao {
     }
 
     //
+
     @Override
-    public void buyStock(int playerNumber) {
-//        int stockIndicator;
-//
-//        do {
-//            showOutput.showToConsole("Type number of the Stock which you wanna buy:");
-//            comend = sc.nextLine();
-//            stockIndicator = Integer.parseInt(comend);
-//            if (stockIndicator>=marketStock.size()-1){
-//                showToConsole("There is no such a Stock in the market, try again..");
-//            }
-//        }while (stockIndicator>=marketStock.size());
-//
-//        showToConsole("You can buy max : " + (int)(cash/marketStock.get(stockIndicator).getPriceBuy()));
-//        showToConsole("How many Stock you wanna buy " + marketStock.get(stockIndicator).getName() + " ?");
-//        comend = sc.nextLine();
-//        comendOption = Integer.parseInt(comend);
-//        if (comendOption*marketStock.get(stockIndicator).getPriceBuy()>cash){
-//            showToConsole("You haven't cash for such of amount of Stocks..");
-//        } else {
-//            //we buy
-//            for(Map.Entry<StockModel, Integer> iterat : myStock.entrySet()) { // iterate for our stocks (wallet)
-//                if (iterat.getKey().getName().equals(marketStock.get(stockIndicator).getName())) { // check if we have such Stock in our wallet
-//                    iterat.setValue(iterat.getValue() + comendOption); // increment Stock in wallet
-//                    isAlreadyInWallet = true;
-//                    cash -= marketStock.get(stockIndicator).getPriceBuy()*comendOption; // take cash
-//                    break; // break loop after bouy
-//                }
-//            } // exit loop
-//            if (!isAlreadyInWallet) { //if Stock has been not allocated in wallet we have to add it
-//                myStock.put(marketStock.get(stockIndicator), comendOption);
-//                isAlreadyInWallet = false; // reset position in wallet
-//                cash -= marketStock.get(stockIndicator).getPriceBuy()*comendOption; // pay
-//            }
-//        }
+    public void buyStock(int playerNumber, List<StockModel> marketStock, StringBuilder sb) {
+        int stockIndicator;
+        do {
+            sb.append("Type number of the Stock which you wanna buy:");
+            showOutput.showToConsole(sb);
+            comend = sc.nextLine();
+            stockIndicator = Integer.parseInt(comend);
+            if (stockIndicator>=marketStock.size()-1){
+                showToConsole("There is no such a Stock in the market, try again..");
+            }
+        }while (stockIndicator>=marketStock.size());
+
+        showToConsole("You can buy max : " + (int)(cash/marketStock.get(stockIndicator).getPriceBuy()));
+        showToConsole("How many Stock you wanna buy " + marketStock.get(stockIndicator).getName() + " ?");
+        comend = sc.nextLine();
+        comendOption = Integer.parseInt(comend);
+        if (comendOption*marketStock.get(stockIndicator).getPriceBuy()>cash){
+            showToConsole("You haven't cash for such of amount of Stocks..");
+        } else {
+            //we buy
+            for(Map.Entry<StockModel, Integer> iterat : myStock.entrySet()) { // iterate for our stocks (wallet)
+                if (iterat.getKey().getName().equals(marketStock.get(stockIndicator).getName())) { // check if we have such Stock in our wallet
+                    iterat.setValue(iterat.getValue() + comendOption); // increment Stock in wallet
+                    isAlreadyInWallet = true;
+                    cash -= marketStock.get(stockIndicator).getPriceBuy()*comendOption; // take cash
+                    break; // break loop after bouy
+                }
+            } // exit loop
+            if (!isAlreadyInWallet) { //if Stock has been not allocated in wallet we have to add it
+                myStock.put(marketStock.get(stockIndicator), comendOption);
+                isAlreadyInWallet = false; // reset position in wallet
+                cash -= marketStock.get(stockIndicator).getPriceBuy()*comendOption; // pay
+            }
+        }
     }
 
     @Override
@@ -119,19 +120,19 @@ public class PlayerDaoImpl implements PlayerDao {
     }
 
     @Override
-    public void sellAllStocks(int playerNumber) {
-//        int valueTimes = 0;
-//        for (Map.Entry<StockModel, Integer> element : players.get(playerNumber).getWallet().entrySet()){ //loop thru our stock
-//            valueTimes = element.getValue();
-//            for (StockModel stock1 : marketStock) {//loop for market for check if stock exists
-//                if (stock1.getName().equals(element.getKey().getName())){ // check sell price
-//                    players.get(playerNumber).setCach(players.get(playerNumber).getCach()+stock1.getPriceSell()*valueTimes);// sell xTimes our stock
-//                    element.setValue(0);
-//                    myStock.remove(element.getKey(), element.getValue());
-//                    break;
-//                }
-//            }
-//        }
+    public String sellAllStocks(int playerNumber, List<StockModel> marketStocks, StringBuilder sb) {
+        for (Map.Entry<StockModel, Integer> element : players.get(playerNumber).getWallet().entrySet()){ //loop thru our stock
+            for (StockModel stock : marketStocks) {//loop for market for check if stock exists
+                if (stock.getName().equals(element.getKey().getName())){ // check sell price
+                    sb.append("\n" + stock.getName() + " has been sold " + element.getValue() + " times for $"
+                            + stock.getPriceSell()*element.getValue());
+                    players.get(playerNumber).setCach(players.get(playerNumber).getCach()+stock.getPriceSell()*element.getValue());
+                    element.setValue(0);
+                    players.get(playerNumber).adjustWallet(stock.getName(), 0);
+                }
+            }
+        }
+        return sb.toString();
     }
 
     @Override

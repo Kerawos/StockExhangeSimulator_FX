@@ -12,6 +12,4 @@ public interface StockExchangeDao {
     String getStockFromStockList(List<StockModel> stockList);
     void updatePricesOfStockList(List<StockModel> stockList);
     String getTimeOfPlay(int turns);
-
-    void closeApp();
 }

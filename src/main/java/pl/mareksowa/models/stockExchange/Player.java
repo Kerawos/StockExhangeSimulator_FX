@@ -5,6 +5,7 @@ import pl.mareksowa.models.stock.StockModel;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Player {
 
@@ -30,5 +31,13 @@ public class Player {
 
     public void setWallet(HashMap<StockModel, Integer> wallet) {
         this.wallet = wallet;
+    }
+
+    public void adjustWallet(String keyName, int setValue){
+        for (Map.Entry<StockModel, Integer> element : wallet.entrySet()){
+            if (element.getKey().getName().equals(keyName)){
+                element.setValue(setValue);
+            }
+        }
     }
 }
